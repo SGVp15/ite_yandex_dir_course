@@ -5,8 +5,8 @@ class Course:
     def __init__(self, name, date_start: datetime.date, date_stop: datetime.date, teacher='', site=''):
         self.name: str = name
         self.days = (date_stop - date_start).days
-        self.date_start = date_start
-        self.date_stop = date_stop
+        self.date_start: datetime.date = date_start
+        self.date_stop: datetime.date = date_stop
         self.teacher: str = teacher
         self.site: str = site
 

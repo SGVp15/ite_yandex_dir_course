@@ -12,7 +12,7 @@ def parse_for_course(s: str) -> [Course]:
         try:
             teacher = elem[3]
             name = elem[1]
-            site = elem[8]
+            site = elem[8].split(' ')[0]
             date_start_str = elem[4].split('.')
             date_start_str = list(map(int, date_start_str))
 
