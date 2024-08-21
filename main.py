@@ -24,7 +24,6 @@ def create_dirs(course: Course):
 
 def rename_old_dirs():
     dirs = [f for f in os.listdir(yandex_dir) if os.path.isdir(os.path.join(yandex_dir, f))]
-    print(dirs)
     for dir in dirs:
         # '2024-08-26 2024-08-30 ITILF4-online Громаков Zoom_1'
         words = dir.split(' ')
@@ -34,7 +33,9 @@ def rename_old_dirs():
             today = datetime.date.today()
             if date_end_course < today and is_empty_folders(os.path.join(yandex_dir, dir)) is False:
                 new_name = f'{words[2]} {words[3]} {words[4]} {words[0]}'
-                os.rename(os.path.join(yandex_dir, dir), os.path.join(yandex_dir, new_name))
+                old_path = os.path.join(yandex_dir, dir)
+                os.rename(old_path, os.path.join(yandex_dir, new_name))
+                print(f'[RENAME] {old_path}')
         except (ValueError, IndexError):
             continue
 
