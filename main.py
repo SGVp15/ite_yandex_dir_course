@@ -1,6 +1,5 @@
 import datetime
 import os
-import re
 from datetime import date, timedelta
 
 from config import yandex_dir
@@ -18,8 +17,9 @@ def create_dirs(course: Course):
     path_course = os.path.join(yandex_dir, str(course))
     for single_date in daterange(course.date_start, course.date_stop):
         path_full = os.path.join(path_course, single_date.strftime("%Y-%m-%d"))
-        os.makedirs(path_full, exist_ok=True)
-        print(path_full)
+        if not os.path.exists(path_full):
+            os.makedirs(path_full, exist_ok=True)
+            print(path_full)
 
 
 def rename_old_dirs():
