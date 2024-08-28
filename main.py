@@ -59,6 +59,6 @@ def main():
 
 
 if __name__ == '__main__':
-    log.info('run')
+    log.warning('[ RUN ]')
     rename_old_dirs()
     main()
