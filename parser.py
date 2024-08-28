@@ -1,6 +1,7 @@
 import datetime
 import re
 
+from UTILS.log import log
 from course import Course
 
 
@@ -23,6 +24,6 @@ def parse_for_course(s: str) -> [Course]:
             date_stop = datetime.date(2000 + date_stop_str[2], date_stop_str[1], date_stop_str[0])
             if re.findall(r'_\d', site):
                 courses.append(Course(name, date_start, date_stop, teacher, site))
-        except IndexError:
-            continue
+        except IndexError as e:
+            log.error(e)
     return courses
