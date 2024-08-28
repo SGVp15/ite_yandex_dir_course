@@ -20,7 +20,7 @@ def create_dirs(course: Course):
         path_full = os.path.join(path_course, single_date.strftime("%Y-%m-%d"))
         if not os.path.exists(path_full):
             os.makedirs(path_full, exist_ok=True)
-            log(f'[CREATE] {path_full}')
+            log.info(f'[CREATE] {path_full}')
 
 
 def rename_old_dirs():
@@ -36,7 +36,7 @@ def rename_old_dirs():
                 new_name = f'{words[2]} {words[3]} {words[4]} {words[0]}'
                 old_path = os.path.join(yandex_dir, dir)
                 os.rename(old_path, os.path.join(yandex_dir, new_name))
-                log(f'[RENAME] {old_path}')
+                log.info(f'[RENAME] {old_path}')
         except (ValueError, IndexError):
             continue
 
