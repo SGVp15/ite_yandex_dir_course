@@ -19,7 +19,7 @@ def create_dirs(course: Course):
         path_full = os.path.join(path_course, single_date.strftime("%Y-%m-%d"))
         if not os.path.exists(path_full):
             os.makedirs(path_full, exist_ok=True)
-            print(path_full)
+            print(f'[CREATE] {path_full}')
 
 
 def rename_old_dirs():
