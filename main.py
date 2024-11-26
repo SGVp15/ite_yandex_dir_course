@@ -3,7 +3,7 @@ import os
 from datetime import date, timedelta
 
 from UTILS.log import log
-from config import yandex_dir
+from config import yandex_dir, INPUT_FILE
 from course import Course
 from parser import parse_for_course
 
@@ -50,7 +50,7 @@ def is_empty_folders_in_path(path):
 
 
 def main():
-    with open('./course.txt', mode='r', encoding='utf-8') as f:
+    with open(INPUT_FILE, mode='r', encoding='utf-8') as f:
         s = f.read()
     courses = parse_for_course(s)
     now = datetime.datetime.now().date()
