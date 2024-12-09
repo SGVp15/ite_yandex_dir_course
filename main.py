@@ -18,7 +18,7 @@ def create_dirs(course: Course):
     path_course = os.path.join(yandex_dir, str(course))
     if not os.path.exists(path_course):
         for single_date in daterange(course.date_start, course.date_stop):
-            path_full = os.path.join(path_course, single_date.strftime("%Y-%m-%d"))
+            path_full = os.path.join(path_course, f'{single_date.strftime("%Y-%m-%d")} {course.name} {course.teacher}')
             if not os.path.exists(path_full):
                 os.makedirs(path_full, exist_ok=True)
                 log.info(f'[CREATE] {path_full}')
