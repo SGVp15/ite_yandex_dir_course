@@ -56,7 +56,8 @@ def main():
     now = datetime.datetime.now().date()
     courses = [x for x in courses if x.date_stop >= now]
     for course in courses:
-        create_dirs(course)
+        if course.name != 'ITILF4-online':
+            create_dirs(course)
 
 
 if __name__ == '__main__':
