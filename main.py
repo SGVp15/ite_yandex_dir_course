@@ -17,11 +17,12 @@ def daterange(start_date: date, end_date: date):
 def create_dirs(course: Course):
     path_course = os.path.join(yandex_dir, str(course))
     if not os.path.exists(path_course):
-        for single_date in daterange(course.date_start, course.date_stop):
-            path_full = os.path.join(path_course, f'{single_date.strftime("%Y-%m-%d")} {course.name} {course.teacher}')
-            if not os.path.exists(path_full):
-                os.makedirs(path_full, exist_ok=True)
-                log.info(f'[CREATE] {path_full}')
+        if course.name != 'ITILF4-online':
+            for single_date in daterange(course.date_start, course.date_stop):
+                path_full = os.path.join(path_course, f'{single_date.strftime("%Y-%m-%d")} {course.name} {course.teacher}')
+                if not os.path.exists(path_full):
+                    os.makedirs(path_full, exist_ok=True)
+                    log.info(f'[CREATE] {path_full}')
 
 
 def rename_old_dirs():
@@ -56,8 +57,7 @@ def main():
     now = datetime.datetime.now().date()
     courses = [x for x in courses if x.date_stop >= now]
     for course in courses:
-        if course.name != 'ITILF4-online':
-            create_dirs(course)
+        create_dirs(course)
 
 
 if __name__ == '__main__':
