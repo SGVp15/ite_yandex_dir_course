@@ -19,7 +19,8 @@ def create_dirs(course: Course):
     if not os.path.exists(path_course):
         if course.name != 'ITILF4-online':
             for single_date in daterange(course.date_start, course.date_stop):
-                path_full = os.path.join(path_course, f'{single_date.strftime("%Y-%m-%d")} {course.name} {course.teacher}')
+                path_full = os.path.join(path_course,
+                                         f'{single_date.strftime("%Y-%m-%d")} {course.name} {course.teacher}')
                 if not os.path.exists(path_full):
                     os.makedirs(path_full, exist_ok=True)
                     log.info(f'[CREATE] {path_full}')
@@ -50,8 +51,8 @@ def is_empty_folders_in_path(path):
     return False
 
 
-def main():
-    with open(INPUT_FILE, mode='r', encoding='utf-8') as f:
+def create_folder_courses_from_file(file=INPUT_FILE):
+    with open(file, mode='r', encoding='utf-8') as f:
         s = f.read()
     courses = parse_for_course(s)
     now = datetime.datetime.now().date()
@@ -63,4 +64,5 @@ def main():
 if __name__ == '__main__':
     log.warning('[ RUN ]')
     rename_old_dirs()
-    main()
+    if os.path.exists(INPUT_FILE):
+        create_folder_courses_from_file(INPUT_FILE)
