@@ -16,6 +16,7 @@ def daterange(start_date: date, end_date: date):
 
 def create_dirs(course: Course):
     path_course = os.path.join(yandex_dir, str(course))
+    os.makedirs(path_course, exist_ok=True)
     if not os.path.exists(path_course):
         if course.name != 'ITILF4-online':
             for single_date in daterange(course.date_start, course.date_stop):
