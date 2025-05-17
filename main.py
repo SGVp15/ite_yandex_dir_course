@@ -1,7 +1,7 @@
 import datetime
 import os
 from datetime import date, timedelta
-
+import shutil
 from UTILS.log import log
 from config import yandex_dir, INPUT_FILE
 from course import Course
@@ -41,7 +41,7 @@ def rename_old_dirs():
             if date_end_course < today and is_empty_folders_in_path(os.path.join(yandex_dir, dir)) is False:
                 new_name = f'{words[2]} {words[3]} {words[4]} {words[0]}'
                 old_path = os.path.join(yandex_dir, dir)
-                os.rename(old_path, os.path.join(yandex_dir, new_name))
+                shutil.move(old_path, os.path.join(yandex_dir, new_name))
                 log.info(f'[RENAME] {old_path}')
         except (ValueError, IndexError):
             continue
