@@ -1,9 +1,10 @@
 import datetime
 import os
 from datetime import date, timedelta
-import shutil
+from pathlib import Path
+
 from UTILS.log import log
-from config import yandex_dir, INPUT_FILE
+from config import YANDEX_DIR, INPUT_FILE
 from course import Course
 from parser import parse_for_course
 
@@ -15,34 +16,37 @@ def daterange(start_date: date, end_date: date):
 
 
 def create_dirs(course: Course):
-    path_course = os.path.join(yandex_dir, str(course))
+    path_course = Path(YANDEX_DIR) / str(course)
 
-    if not os.path.exists(path_course):
-        if course.name != 'ITILF4-online':
-            for single_date in daterange(course.date_start, course.date_stop):
-                path_full = os.path.join(path_course,
-                                         f'{single_date.strftime("%Y-%m-%d")} {course.name} {course.teacher}')
-                if not os.path.exists(path_full):
-                    os.makedirs(path_full, exist_ok=True)
-                    log.info(f'[CREATE] {path_full}')
-        else:
-            os.makedirs(path_course, exist_ok=True)
+    if path_course.exists():
+        return
+
+    if 'itilf4-online' in course.name.lower():
+        path_course.mkdir(parents=True, exist_ok=True)
+        log.info(f'[CREATE] {path_course}')
+        return
+
+    for single_date in daterange(course.date_start, course.date_stop):
+        path_full = Path(path_course,
+                         f'{single_date.strftime("%Y-%m-%d")} {course.name} {course.teacher}')
+        if not path_full.exists():
+            path_full.mkdir(parents=True, exist_ok=True)
+            log.info(f'[CREATE] {path_full}')
 
 
 def rename_old_dirs():
-    dirs = [f for f in os.listdir(yandex_dir) if os.path.isdir(os.path.join(yandex_dir, f))]
+    dirs = [f for f in YANDEX_DIR.iterdir() if f.is_dir()]
     for dir in dirs:
         # '2024-08-26 2024-08-30 ITILF4-online Громаков Zoom_1'
-        words = dir.split(' ')
+        words = dir.name.split(' ')
         try:
             date_course_str = list(map(int, words[1].split('-')))
             date_end_course = datetime.date(date_course_str[0], date_course_str[1], date_course_str[2])
             today = datetime.date.today()
-            if date_end_course < today and is_empty_folders_in_path(os.path.join(yandex_dir, dir)) is False:
+            if date_end_course < today and is_empty_folders_in_path(dir) is False:
                 new_name = f'{words[2]} {words[3]} {words[4]} {words[0]}'
-                old_path = os.path.join(yandex_dir, dir)
-                shutil.move(old_path, os.path.join(yandex_dir, new_name))
-                log.info(f'[RENAME] {old_path}')
+                Path.rename(dir, Path(YANDEX_DIR, new_name))
+                log.info(f'[RENAME] {dir}')
         except (ValueError, IndexError):
             continue
 
@@ -55,6 +59,9 @@ def is_empty_folders_in_path(path):
 
 
 def create_folder_courses_from_file(file=INPUT_FILE):
+    if not file.exists():
+        log.warning(f'File not exist: {file}')
+        return
     with open(file, mode='r', encoding='utf-8') as f:
         s = f.read()
     courses = parse_for_course(s)
@@ -67,5 +74,4 @@ def create_folder_courses_from_file(file=INPUT_FILE):
 if __name__ == '__main__':
     log.warning('[ RUN ]')
     rename_old_dirs()
-    if os.path.exists(INPUT_FILE):
-        create_folder_courses_from_file(INPUT_FILE)
+    create_folder_courses_from_file(INPUT_FILE)

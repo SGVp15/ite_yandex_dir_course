@@ -1,6 +1,6 @@
-import os
+from pathlib import Path
 
-yandex_dir = os.path.join('C:\\', 'Users', 'user', 'YandexDisk', 'Вебинары ITEXPERT Курсы')
+YANDEX_DIR = Path('C:\\', 'Users', 'user', 'YandexDisk', 'Вебинары ITEXPERT Курсы')
 
-log_file = './log.txt'
-INPUT_FILE = './course.txt'
+LOG_FILE = Path('./log.txt')
+INPUT_FILE = Path('./course.txt')
