@@ -4,7 +4,7 @@ from datetime import date, timedelta
 from pathlib import Path
 
 from UTILS.log import log
-from config import YANDEX_DIR, INPUT_FILE
+from config import YANDEX_DIR, INPUT_FILE, COURSES_ONE_FOLDER
 from course import Course
 from parser import parse_for_course
 
@@ -21,7 +21,7 @@ def create_dirs(course: Course):
     if path_course.exists():
         return
 
-    if 'itilf4-online' in course.name.lower():
+    if any(item.lower() in course.name.lower() for item in COURSES_ONE_FOLDER):
         path_course.mkdir(parents=True, exist_ok=True)
         log.info(f'[CREATE] {path_course}')
         return

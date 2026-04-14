@@ -4,3 +4,4 @@ YANDEX_DIR = Path('C:\\', 'Users', 'user', 'YandexDisk', 'Вебинары ITEXP
 
 LOG_FILE = Path('./log.txt')
 INPUT_FILE = Path('./course.txt')
+COURSES_ONE_FOLDER = ['ITSM-online',]
