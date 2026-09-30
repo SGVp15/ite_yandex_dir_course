@@ -21,10 +21,10 @@ def create_dirs(course: Course):
     if path_course.exists():
         return
 
-    if any(item.lower() in course.name.lower() for item in COURSES_ONE_FOLDER):
-        path_course.mkdir(parents=True, exist_ok=True)
-        log.info(f'[CREATE] {path_course}')
-        return
+    # if any(item.lower() in course.name.lower() for item in COURSES_ONE_FOLDER):
+    #     path_course.mkdir(parents=True, exist_ok=True)
+    #     log.info(f'[CREATE] {path_course}')
+    #     return
 
     for single_date in daterange(course.date_start, course.date_stop):
         path_full = Path(path_course,
