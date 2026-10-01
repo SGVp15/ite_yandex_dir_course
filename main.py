@@ -75,3 +75,4 @@ if __name__ == '__main__':
     log.warning('[ RUN ]')
     rename_old_dirs()
     create_folder_courses_from_file(INPUT_FILE)
+    time.sleep(10)
