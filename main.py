@@ -2,7 +2,7 @@ import datetime
 import os
 from datetime import date, timedelta
 from pathlib import Path
-
+import time
 from UTILS.log import log
 from config import YANDEX_DIR, INPUT_FILE, COURSES_ONE_FOLDER
 from course import Course
@@ -21,10 +21,10 @@ def create_dirs(course: Course):
     if path_course.exists():
         return
 
-    # if any(item.lower() in course.name.lower() for item in COURSES_ONE_FOLDER):
-    #     path_course.mkdir(parents=True, exist_ok=True)
-    #     log.info(f'[CREATE] {path_course}')
-    #     return
+    if any(item.lower() in course.name.lower() for item in COURSES_ONE_FOLDER):
+        path_course.mkdir(parents=True, exist_ok=True)
+        log.info(f'[CREATE] {path_course}')
+        return
 
     for single_date in daterange(course.date_start, course.date_stop):
         path_full = Path(path_course,
@@ -75,4 +75,4 @@ if __name__ == '__main__':
     log.warning('[ RUN ]')
     rename_old_dirs()
     create_folder_courses_from_file(INPUT_FILE)
-    time.sleep(10)
+    time.sleep(3)
