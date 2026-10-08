@@ -32,6 +32,7 @@ def create_dirs(course: Course):
         if not path_full.exists():
             path_full.mkdir(parents=True, exist_ok=True)
             log.info(f'[CREATE] {path_full}')
+            time.sleep(0.5)
 
 
 def rename_old_dirs():
